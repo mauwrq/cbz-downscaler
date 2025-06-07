@@ -46,13 +46,15 @@ void unzip(const char *zip_path, fs::path output_path) {
   int image_count = zip_get_num_entries(zip, 0);
   struct zip_stat st;
   zip_stat_init(&st);
+  fs::create_directory(output_path / "unzipped");
+  fs::path unzipped_path = output_path / "unzipped";
 
   for (int i = 0; i < image_count; i++) {
     zip_stat_index(zip, i, 0, &st);
     char *contents = new char[st.size];
     zip_file *f = zip_fopen_index(zip, i, 0);
     zip_fread(f, contents, st.size);
-    std::ofstream file(output_path / st.name);
+    std::ofstream file(unzipped_path / st.name);
     file.write(contents, st.size);
     file.close();
   }
@@ -66,6 +68,6 @@ int main(int argc, char* argv[]) {
   fs::path tmp_path = project_root / "tmp";
   const char *cbz_input = argv[1];
   unzip(cbz_input, tmp_path);
-  scale_imgs(tmp_path, output_path, 720);
+  scale_imgs(tmp_path / "unzipped", output_path, 720);
 }
 
