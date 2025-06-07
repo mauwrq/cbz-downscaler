@@ -46,7 +46,6 @@ int main(int argc, char* argv[]) {
   fs::path project_root = executable_path.parent_path().parent_path();
   fs::path output_path = project_root / "output";
   fs::path tmp_path = project_root / "tmp";
-  fs::path test_path = project_root / "test_files";
   const char *cbz_input = argv[1];
   unzip(cbz_input, tmp_path);
 }
