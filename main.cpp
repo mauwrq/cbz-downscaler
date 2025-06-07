@@ -18,7 +18,7 @@ void scale_img(fs::path img_path, fs::path output_path, double width) {
   file.close();
 }
 
-void scale_folder(fs::path folder_path, fs::path output_path, double width) {
+void scale_imgs(fs::path folder_path, fs::path output_path, double width) {
   for (auto const& img : fs::directory_iterator{folder_path}) {
     scale_img(img.path(), output_path, width);
   }
@@ -66,6 +66,6 @@ int main(int argc, char* argv[]) {
   fs::path tmp_path = project_root / "tmp";
   const char *cbz_input = argv[1];
   unzip(cbz_input, tmp_path);
-  scale_folder(tmp_path, output_path, 720);
+  scale_imgs(tmp_path, output_path, 720);
 }
 
