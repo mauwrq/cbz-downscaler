@@ -67,9 +67,11 @@ int main(int argc, char* argv[]) {
 
   fs::create_directory(tmp_path / "unzipped");
   fs::path unzipped_path = tmp_path / "unzipped";
+  fs::create_directory(tmp_path / "scaled");
+  fs::path scaled_path = tmp_path / "scaled";
 
   const char *cbz_input = argv[1];
   unzip(cbz_input, unzipped_path);
-  scale_imgs(tmp_path / "unzipped", output_path, 720);
+  scale_imgs(unzipped_path, scaled_path, 720);
 }
 
