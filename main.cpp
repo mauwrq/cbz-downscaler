@@ -7,14 +7,14 @@
 
 namespace fs = std::filesystem;
 
-void scale(fs::path img_path, fs::path output_path, double width) {
+void scale_img(fs::path img_path, fs::path output_path, double width) {
   cv::Mat img_in = cv::imread(img_path);
   cv::Mat img_out;
   double img_w = img_in.cols;
   double scaling_factor = width / img_w;
   cv::resize(img_in, img_out, cv::Size(), scaling_factor, scaling_factor, cv::INTER_AREA);
-  std::ofstream file(output_path / "resized_img.jpg");
-  cv::imwrite(output_path / "resized_img.jpg", img_out);
+  std::ofstream file(output_path / img_path.filename());
+  cv::imwrite(output_path / img_path.filename(), img_out);
   file.close();
 }
 
