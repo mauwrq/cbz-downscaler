@@ -1,4 +1,5 @@
 output/*
+tmp/*
 test_files/*
 .ccls-cache/*
 test.sh
