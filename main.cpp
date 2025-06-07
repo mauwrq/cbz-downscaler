@@ -36,6 +36,12 @@ void to_jpg(fs::path img_path, fs::path output_path) {
   }
 }
 
+void to_jpgs(fs::path folder_path, fs::path output_path) {
+  for (auto const& img : fs::directory_iterator{folder_path}) {
+    to_jpg(img.path(), output_path);
+  }
+}
+
 void unzip(const char *zip_path, fs::path output_path) {
   zip *zip;
   int err = 0;
@@ -73,5 +79,6 @@ int main(int argc, char* argv[]) {
   const char *cbz_input = argv[1];
   unzip(cbz_input, unzipped_path);
   scale_imgs(unzipped_path, scaled_path, 720);
+  to_jpgs(scaled_path, output_path);
 }
 
