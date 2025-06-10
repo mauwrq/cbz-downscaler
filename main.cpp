@@ -34,6 +34,9 @@ void to_jpg(fs::path img_path, fs::path output_path) {
     cv::imwrite(jpg_path, non_jpg, std::vector<int>{cv::IMWRITE_JPEG_QUALITY, 95});
     file.close();
   }
+  else {
+    fs::copy_file(img_path, output_path / img_path.filename());
+  }
 }
 
 void to_jpgs(fs::path folder_path, fs::path output_path) {
@@ -75,10 +78,12 @@ int main(int argc, char* argv[]) {
   fs::path unzipped_path = tmp_path / "unzipped";
   fs::create_directory(tmp_path / "scaled");
   fs::path scaled_path = tmp_path / "scaled";
+  fs::create_directory(tmp_path / "converted");
+  fs::path converted_path = tmp_path / "converted";
 
   const char *cbz_input = argv[1];
   unzip(cbz_input, unzipped_path);
   scale_imgs(unzipped_path, scaled_path, 720);
-  to_jpgs(scaled_path, output_path);
+  to_jpgs(scaled_path, converted_path);
 }
 
