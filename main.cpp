@@ -68,6 +68,20 @@ void unzip(const char *zip_path, fs::path output_path) {
   zip_close(zip);
 }
 
+void rezip(fs::path input_path, fs::path output_path, fs::path cbz_name) {
+  fs::path output_zip = output_path / cbz_name.filename();
+  zip *zip;
+  int err = 0;
+  if ((zip = zip_open(output_zip.string().c_str(), ZIP_CREATE | ZIP_TRUNCATE, &err)) == NULL) {
+    return;
+  }
+  for (auto const& img : fs::directory_iterator{input_path}) {
+    zip_source_t *source = zip_source_file(zip, img.path().string().c_str(), 0, 0);
+    zip_file_add(zip, img.path().filename().string().c_str(), source, ZIP_FL_ENC_GUESS);
+  }
+  zip_close(zip);
+}
+
 int main(int argc, char* argv[]) {
   fs::path executable_path = fs::canonical(argv[0]);
   fs::path project_root = executable_path.parent_path().parent_path();
@@ -82,8 +96,11 @@ int main(int argc, char* argv[]) {
   fs::path converted_path = tmp_path / "converted";
 
   const char *cbz_input = argv[1];
+  fs::path cbz_name = cbz_input;
+  cbz_name.filename().replace_extension(".cbz");
   unzip(cbz_input, unzipped_path);
   scale_imgs(unzipped_path, scaled_path, 720);
   to_jpgs(scaled_path, converted_path);
+  rezip(converted_path, output_path, cbz_name);
 }
 
