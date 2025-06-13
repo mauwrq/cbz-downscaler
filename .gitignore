@@ -3,3 +3,4 @@ tmp/*
 test_files/*
 .ccls-cache/*
 test.sh
+compile_commands.json
