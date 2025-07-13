@@ -6,6 +6,7 @@
 #include <opencv2/opencv.hpp>
 #include "cbz_unzipper.hpp"
 #include "image_scaler.hpp"
+#include "image_converter.hpp"
 
 namespace fs = std::filesystem;
 
@@ -124,11 +125,12 @@ int main(int argc, char* argv[]) {
 
   CBZUnzipper unzipper;
   ImageScaler scaler;
+  ImageConverter converter;
 
   unzipper.unzip(cbz_input, unzipped_path);
   scaler.scale_imgs(unzipped_path, scaled_path, 1264);
+  converter.to_webps(scaled_path, converted_path); 
 
-  to_webps(scaled_path, converted_path);
   rezip(converted_path, output_path, cbz_name);
 }
 
