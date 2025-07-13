@@ -4,7 +4,7 @@
 #include <fstream>
 #include <filesystem>
 #include <opencv2/opencv.hpp>
-#include "cbz_unzipper.hpp"
+#include "cbz_tools.hpp"
 #include "image_scaler.hpp"
 #include "image_converter.hpp"
 
@@ -123,11 +123,11 @@ int main(int argc, char* argv[]) {
   fs::path cbz_name = cbz_input;
   cbz_name.filename().replace_extension(".cbz");
 
-  CBZUnzipper unzipper;
+  CBZTools cbz_tools;
   ImageScaler scaler;
   ImageConverter converter;
 
-  unzipper.unzip(cbz_input, unzipped_path);
+  cbz_tools.unzip(cbz_input, unzipped_path);
   scaler.scale_imgs(unzipped_path, scaled_path, 1264);
   converter.to_webps(scaled_path, converted_path); 
 

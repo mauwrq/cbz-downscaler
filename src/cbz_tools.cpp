@@ -1,11 +1,11 @@
-#include "cbz_unzipper.hpp"
+#include "cbz_tools.hpp"
 #include <zip.h>
 #include <fstream>
 #include <filesystem>
 
 namespace fs = std::filesystem;
 
-void CBZUnzipper::unzip(const char *zip_path, fs::path output_path) {
+void CBZTools::unzip(const char *zip_path, fs::path output_path) {
   zip *zip;
   int err = 0;
   if ((zip = zip_open(zip_path, 0, &err)) == NULL) { // TODO: proper error checking
@@ -24,6 +24,20 @@ void CBZUnzipper::unzip(const char *zip_path, fs::path output_path) {
     std::ofstream file(output_path / st.name);
     file.write(contents, st.size);
     file.close();
+  }
+  zip_close(zip);
+}
+
+void CBZTools::rezip(fs::path input_path, fs::path output_path, fs::path cbz_name) {
+  fs::path output_zip = output_path / cbz_name.filename();
+  zip *zip;
+  int err = 0;
+  if ((zip = zip_open(output_zip.string().c_str(), ZIP_CREATE | ZIP_TRUNCATE, &err)) == NULL) {
+    return;
+  }
+  for (auto const& img : fs::directory_iterator{input_path}) {
+    zip_source_t *source = zip_source_file(zip, img.path().string().c_str(), 0, 0);
+    zip_file_add(zip, img.path().filename().string().c_str(), source, ZIP_FL_ENC_GUESS);
   }
   zip_close(zip);
 }
