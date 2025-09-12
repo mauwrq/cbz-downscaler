@@ -13,7 +13,9 @@ namespace fs = std::filesystem;
 int main(int argc, char* argv[]) {
   fs::path executable_path = fs::canonical(argv[0]);
   fs::path project_root = executable_path.parent_path().parent_path();
+  fs::create_directory("output");
   fs::path output_path = project_root / "output";
+  fs::create_directory("tmp");
   fs::path tmp_path = project_root / "tmp";
 
   fs::create_directory(tmp_path / "unzipped");
