@@ -16,29 +16,6 @@ namespace fs = std::filesystem;
 namespace po = boost::program_options;
 
 int main(int argc, char* argv[]) {
-  // po::options_description desc("Allowed options");
-  // desc.add_options()
-  //   ("cbz", po::value<std::vector<std::string>>(), "cbz file(s) to downscale");
-  
-  // po::positional_options_description p;
-  // p.add("cbz", -1);
-  
-  // po::variables_map vm;
-  // po::store(po::command_line_parser(argc, argv).options(desc).positional(p).run(),vm);
-  // po::notify(vm);
-
-  // if (vm.count("cbz")) {
-  //   auto cbz_files = vm["cbz"].as<std::vector<std::string>>();
-  //   if (!cbz_files.empty()) {
-  //       std::cout << "First file: " << cbz_files[1] << std::endl;
-  //   }
-  // }
-  // std::cout << "darn" << std::endl;
-
-  // const char *cbz_input = argv[1];
-  // fs::path cbz_name = cbz_input;
-  // cbz_name.filename().replace_extension(".cbz");
-
   ArgumentParser arg_parser;
   PathTools path_tools;
   CBZTools cbz_tools;
