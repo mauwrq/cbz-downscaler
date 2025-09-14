@@ -2,10 +2,13 @@
 #include <zip.h>
 #include <fstream>
 #include <filesystem>
+#include <string>
 
 namespace fs = std::filesystem;
 
-void CBZTools::unzip(const char *zip_path, fs::path output_path) {
+void CBZTools::unzip(std::string zip_path_str, fs::path output_path) {
+  const char* zip_path = zip_path_str.c_str();
+  
   zip *zip;
   int err = 0;
   if ((zip = zip_open(zip_path, 0, &err)) == NULL) { // TODO: proper error checking
@@ -28,7 +31,8 @@ void CBZTools::unzip(const char *zip_path, fs::path output_path) {
   zip_close(zip);
 }
 
-void CBZTools::rezip(fs::path input_path, fs::path output_path, fs::path cbz_name) {
+void CBZTools::rezip(fs::path input_path, fs::path output_path, std::string cbz_name_str) {
+  fs::path cbz_name = cbz_name_str;
   fs::path output_zip = output_path / cbz_name.filename();
   zip *zip;
   int err = 0;

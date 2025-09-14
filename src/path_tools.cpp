@@ -14,7 +14,8 @@ PathTools::project_paths PathTools::init_project_paths(fs::path executable_path)
   return project_paths;
 };
   
-PathTools::tmp_paths PathTools::init_tmp_paths(fs::path cbz_name, PathTools::project_paths project_paths) {
+PathTools::tmp_paths PathTools::init_tmp_paths(std::string cbz_name_str, PathTools::project_paths project_paths) {
+  fs::path cbz_name = cbz_name_str;
   PathTools::tmp_paths tmp_paths;
   fs::create_directory(project_paths.tmp / cbz_name.filename());
   fs::path tmp_cbz_path = project_paths.tmp / cbz_name.filename();

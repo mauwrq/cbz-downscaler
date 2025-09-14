@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.10)
 project(cbz-downscaler)
-add_link_options(-lzip)
+add_link_options(-lzip -lboost_program_options)
 find_package(OpenCV REQUIRED)
 include_directories(${OpenCV_INCLUDE_DIRS})
 include_directories(include)
