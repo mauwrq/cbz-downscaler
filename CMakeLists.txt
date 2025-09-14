@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.10)
-project(cbz-downscaler)
+project(panelpress)
 add_link_options(-lzip -lboost_program_options)
 find_package(OpenCV REQUIRED)
 include_directories(${OpenCV_INCLUDE_DIRS})
